@@ -1,0 +1,47 @@
+@layer tailwind-base, antd;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.hero {
+  background-image: url('assets/hero.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; 
+}
+
+a {
+  color: #F28C28;
+}
+
+::-webkit-scrollbar {
+  background-color: #f6f8fb;
+  width: 0.3125rem;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  width: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #F28C28;
+}
+
+@media (prefers-color-scheme: dark) {
+  
+}

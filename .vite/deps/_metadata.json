@@ -1,0 +1,76 @@
+{
+  "hash": "bb44d4c9",
+  "configHash": "1e97114f",
+  "lockfileHash": "0248e7e0",
+  "browserHash": "55058801",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "1b879374",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "659f11f7",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "4862cfb1",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "d0bffcc5",
+      "needsInterop": false
+    },
+    "react-toastify": {
+      "src": "../../node_modules/react-toastify/dist/index.mjs",
+      "file": "react-toastify.js",
+      "fileHash": "1f9e4a0e",
+      "needsInterop": false
+    },
+    "@ant-design/cssinjs": {
+      "src": "../../node_modules/@ant-design/cssinjs/es/index.js",
+      "file": "@ant-design_cssinjs.js",
+      "fileHash": "8b8d4ba4",
+      "needsInterop": false
+    },
+    "antd": {
+      "src": "../../node_modules/antd/es/index.js",
+      "file": "antd.js",
+      "fileHash": "4e0e50b7",
+      "needsInterop": false
+    },
+    "formik": {
+      "src": "../../node_modules/formik/dist/formik.esm.js",
+      "file": "formik.js",
+      "fileHash": "df637727",
+      "needsInterop": false
+    },
+    "yup": {
+      "src": "../../node_modules/yup/index.esm.js",
+      "file": "yup.js",
+      "fileHash": "047b5de9",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-PMNX6GPZ": {
+      "file": "chunk-PMNX6GPZ.js"
+    },
+    "chunk-IPYILTUR": {
+      "file": "chunk-IPYILTUR.js"
+    },
+    "chunk-4SFRHSJ3": {
+      "file": "chunk-4SFRHSJ3.js"
+    },
+    "chunk-EQCVQC35": {
+      "file": "chunk-EQCVQC35.js"
+    }
+  }
+}
