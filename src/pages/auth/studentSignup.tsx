@@ -1,14 +1,15 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../config/axiosConfig";
-import { getSignupRoute } from "../../helpers/routesHelper";
 import * as Yup from "yup";
 import { Button, DatePicker, Input, Select } from "antd";
 import { Field, Form, Formik } from "formik";
 import AuthLayout from "../../components/layouts/authLayout";
 import DomainSelect from "../../components/domainSelect";
-import { useState } from "react";
-import FieldContainer from "../../components/FieldContainer";
+import { useEffect, useState } from "react";
 import TextArea from "antd/es/input/TextArea";
+import FieldContainer from "../../components/fieldContainer";
+import { IInstitution } from "../../types/institutions";
+import { toast } from "react-toastify";
 
 const validationSchema = Yup.object({
   email: Yup.string().email("Invalid email address").required("Required"),
@@ -20,7 +21,9 @@ const validationSchema = Yup.object({
   dob: Yup.string().required("Required"),
   gender: Yup.string().required("Required"),
   address: Yup.string().required("Required"),
-  phone: Yup.string().required("Required"),
+  phone: Yup.string()
+            .matches(/^\d{11}$/, 'Phone number must be exactly 11 digits')
+            .required('Phone number is required'),
   password: Yup.string()
     .min(8, "Password must be at least 8 characters")
     .required("Required"),
@@ -42,11 +45,8 @@ interface FormValues {
 
 const StudentSignup = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const queryParams = new URLSearchParams(location.search);
-  const domain = queryParams.get('d') as string;
+  const [institutions, setInstitutions] = useState();
 
   const initialValues = {
     email: "",
@@ -64,13 +64,29 @@ const StudentSignup = () => {
 
   const onSubmit = async (values: FormValues) => {
     try {
-      const response = await axiosInstance.post(getSignupRoute(domain), values);
-      localStorage.setItem(`nftcate-${domain}`, response.data)
-      navigate('/login');
+      const response = await axiosInstance.post('/students/register', values);
+      toast.success(response.data.message);
+      navigate('/login?d=student');
     } catch (error) {
       console.log(error)
     }
   };
+
+  const getInstitutions = async () => {
+    try {
+      const response = await axiosInstance.get('/institutions');
+      setInstitutions(response.data.map((institution: IInstitution) => {
+        return (
+          {
+            label: institution.name,
+            value: institution._id
+          }
+        )
+      }))
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleCancelModal = () => {
     setIsModalOpen(false);
@@ -79,6 +95,10 @@ const StudentSignup = () => {
   const showModal = () => {
     setIsModalOpen(true);
   };
+
+  useEffect(() => {
+    getInstitutions();
+  }, []);
 
   return (
    <AuthLayout>
@@ -120,12 +140,7 @@ const StudentSignup = () => {
                 className="w-full"
                 size="large"
                 onChange={(value: string) => setFieldValue("institution", value)}
-                options={[
-                  {
-                    value: 'noun',
-                    label: 'National Open University of Nigeria',
-                  },
-                ]}
+                options={institutions}
               />
             </FieldContainer>
 
@@ -203,7 +218,7 @@ const StudentSignup = () => {
                 name="dob"
                 placeholder="Select your date of birth"
                 size="large"
-                onChange={(date, dateString) => console.log(date, dateString)}
+                onChange={(date, dateString) => setFieldValue("dob", dateString)}
                 className={`mt-1 block w-full border p-3 ${
                   errors.dob && touched.dob ? "border-red-500" : ""
                 }`}
@@ -258,6 +273,7 @@ const StudentSignup = () => {
                 placeholder="Enter your phone number"
                 onChange={handleChange}
                 onBlur={handleBlur}
+                type="number"
                 className={`mt-1 block w-full border p-3 ${
                   errors.phone && touched.phone ? "border-red-500" : ""
                 }`}

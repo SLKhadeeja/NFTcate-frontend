@@ -37,7 +37,7 @@ axiosInstance.interceptors.response.use(
       const callbackUrl = window.location.pathname;
 
       localStorage.removeItem('accessToken');
-      window.location.href = `/auth/login?callbackUrl=${callbackUrl}`;
+      window.location.href = `/login?d=institution&callbackUrl=${callbackUrl}`;
     }
     return Promise.reject(error);
   }

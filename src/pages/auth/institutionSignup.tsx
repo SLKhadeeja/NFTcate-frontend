@@ -1,14 +1,15 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../config/axiosConfig";
-import { getSignupRoute } from "../../helpers/routesHelper";
 import * as Yup from "yup";
 import { Button, Input, Select } from "antd";
 import { Field, Form, Formik } from "formik";
 import AuthLayout from "../../components/layouts/authLayout";
 import { useState } from "react";
 import DomainSelect from "../../components/domainSelect";
-import FieldContainer from "../../components/FieldContainer";
+import FieldContainer from "../../components/fieldContainer";
 import TextArea from "antd/es/input/TextArea";
+import { getAllStates, getLgasByState } from "../../utils/statesandlgafunctions";
+import { toast } from "react-toastify";
 
 const validationSchema = Yup.object({
   email: Yup.string().email("Invalid email address").required("Required"),
@@ -18,8 +19,10 @@ const validationSchema = Yup.object({
   city: Yup.string().required("Required"),
   state: Yup.string().required("Required"),
   country: Yup.string().required("Required"),
-  contact: Yup.string().required("Required"),
-  website: Yup.string().required("Required"),
+  contact: Yup.string()
+              .matches(/^\d{11}$/, 'Phone number must be exactly 11 digits')
+              .required('Phone number is required'),
+  website: Yup.string().url('Invalid URL format').required("Required"),
   type: Yup.string().required("Required"),
   password: Yup.string()
     .min(8, "Password must be at least 8 characters")
@@ -42,11 +45,8 @@ interface FormValues {
 
 const InstitutionSignup = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const queryParams = new URLSearchParams(location.search);
-  const domain = queryParams.get('d') as string;
+  const [lgas, setLgas] = useState<{label: string; value: string;}[]>();
 
   const initialValues = {
     email: "",
@@ -64,9 +64,9 @@ const InstitutionSignup = () => {
 
   const onSubmit = async (values: FormValues) => {
     try {
-      const response = await axiosInstance.post(getSignupRoute(domain), values);
-      localStorage.setItem(`nftcate-${domain}`, response.data)
-      navigate('/login');
+      const response = await axiosInstance.post('/institutions/register', values);
+      toast.success(response.data.message);
+      navigate('/login?d=institution');
     } catch (error) {
       console.log(error)
     }
@@ -175,13 +175,11 @@ const InstitutionSignup = () => {
                 size="large"
                 className="w-full"
                 status={errors.state && touched.state ? "error" : ''}
-                onChange={(value: string) => setFieldValue("state", value)}
-                options={[
-                  {
-                    value: 'abuja',
-                    label: 'FCT',
-                  },
-                ]}
+                onChange={(value: string) => {
+                  setFieldValue("state", value);
+                  setLgas(getLgasByState(value));
+                }}
+                options={getAllStates()}
               />
               {errors.state && touched.state && (
                 <div className="text-red-500 text-sm">{errors.state}</div>
@@ -196,13 +194,8 @@ const InstitutionSignup = () => {
                 size="large"
                 className="w-full"
                 status={errors.city && touched.city ? "error" : ''}
-                onChange={(value: string) => setFieldValue("state", value)}
-                options={[
-                  {
-                    value: 'wuse',
-                    label: 'Wuse',
-                  },
-                ]}
+                onChange={(value: string) => setFieldValue("city", value)}
+                options={lgas}
               />
               {errors.city && touched.city && (
                 <div className="text-red-500 text-sm">{errors.city}</div>
@@ -234,6 +227,7 @@ const InstitutionSignup = () => {
                 placeholder="Enter institution contact phone"
                 onChange={handleChange}
                 onBlur={handleBlur}
+                type="number"
                 className={`mt-1 block w-full border p-3 ${
                   errors.contact && touched.contact ? "border-red-500" : ""
                 }`}

@@ -34,6 +34,7 @@ const Login = () => {
   };
 
   const onSubmit = async (values: FormValues) => {
+    console.log('route',getLoginRoute(domain))
     try {
       const response = await axiosInstance.post(getLoginRoute(domain), values);
       localStorage.setItem(`nftcate-${domain}`, response.data)
