@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import Home from './pages/home';
 
 const LoginPage = lazy(() => import('./pages/auth/login'));
 const StudentSignupPage = lazy(() => import('./pages/auth/studentSignup'));
@@ -9,7 +10,7 @@ function App() {
   return (
     <Suspense>
       <Routes>
-        <Route path="/" element={<></>} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
 
         {/* Institution routes */}

@@ -42,6 +42,10 @@ a {
   background-color: #F28C28;
 }
 
+.hero {
+  background-image: url('./assets/hero.webp');
+}
+
 @media (prefers-color-scheme: dark) {
   
 }

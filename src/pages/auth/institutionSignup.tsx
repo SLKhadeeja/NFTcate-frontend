@@ -82,7 +82,7 @@ const InstitutionSignup = () => {
 
   return (
    <AuthLayout>
-    <div className="w-[90%] md:w-[60%] lg:w-3/4 xl:w-1/2 max-h-[80%] flex gap-4 bg-white shadow-xl rounded-xl">
+    <div className="w-[90%] md:w-[60%] lg:w-3/4 xl:w-1/2 max-h-screen md:max-h-[80%] flex gap-4 bg-white md:shadow-xl rounded-xl">
       <div className="w-full p-3 no-scrollbar overflow-y-auto">
         <h1 className="my-3 w-full text-2xl font-medium">Institution Signup</h1>
         <Formik

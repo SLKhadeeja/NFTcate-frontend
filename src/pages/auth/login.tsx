@@ -54,7 +54,7 @@ const Login = () => {
 
   return (
     <AuthLayout>
-      <div className="w-[90%] md:w-[60%] lg:w-3/4 xl:w-1/2 h-1/2 flex gap-4 bg-white shadow-xl rounded-xl">
+      <div className="w-[90%] md:w-[60%] lg:w-3/4 xl:w-1/2 h-1/2 flex gap-4 bg-white md:shadow-xl rounded-xl">
         <div className="w-full p-3 flex flex-col items-center justify-center">
           <h1 className="my-3 w-full text-2xl font-medium">Login</h1>
           <Formik
