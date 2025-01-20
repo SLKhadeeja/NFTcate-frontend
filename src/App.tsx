@@ -5,6 +5,8 @@ import Home from './pages/home';
 const LoginPage = lazy(() => import('./pages/auth/login'));
 const StudentSignupPage = lazy(() => import('./pages/auth/studentSignup'));
 const InstitutionSignupPage = lazy(() => import('./pages/auth/institutionSignup'));
+const StudentDashboard = lazy(() => import('./pages/dashboard/students/home.students'));
+const ProfilePage = lazy(() => import('./pages/dashboard/profile'));
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path='/profile' element={<ProfilePage />} />
 
         {/* Institution routes */}
         <Route path="/institution">
@@ -24,6 +27,7 @@ function App() {
 
         {/* Student routes*/}
         <Route path="/student">
+          <Route path='' element={<StudentDashboard />} />
           <Route path="signup" element={<StudentSignupPage />} />
           <Route path="dashboard" element={<></>}>
 

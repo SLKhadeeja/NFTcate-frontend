@@ -1,34 +1,12 @@
 import { Button } from "antd";
-import DomainSelect from "../components/domainSelect";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import GenericLayout from "../components/layouts/genericLayout";
+import { useLayoutContext } from "../contexts/layout.context";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-  const [isSigninModalOpen, setIsSigninModalOpen] = useState(false);
+  const  { setIsSignupModalOpen } = useLayoutContext();
 
-  const handleCancelSignupModal = () => {
-    setIsSignupModalOpen(false);
-  };
-
-  const handleCancelSigninModal = () => {
-    setIsSigninModalOpen(false);
-  };
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col">
-      <header className="w-full text-white px-6 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-primary">NFTcate</h1>
-        <div className="space-x-4">
-          <Button onClick={() => setIsSigninModalOpen(true)} type="default" className="tbg-white border-primary">
-            Login
-          </Button>
-          <Button onClick={() => setIsSignupModalOpen(true)} type="primary">
-            Signup
-          </Button>
-        </div>
-      </header>
-
+    <GenericLayout>
       {/* Hero Section */}
       <main className="hero relative w-full h-[60vh] bg-cover bg-center">
         <div className="absolute inset-0 z-[15] flex flex-col items-center justify-center text-white px-4">
@@ -83,26 +61,7 @@ const Home = () => {
           </p>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white p-4 w-full text-center mt-12">
-        <p>© 2025 NFTcate. All Rights Reserved.</p>
-      </footer>
-
-      <DomainSelect
-        open={isSignupModalOpen}
-        onCancel={handleCancelSignupModal}
-        onInstitution={() => navigate('/institution/signup')}
-        onStudent={() => navigate('/student/signup')}
-      />
-
-      <DomainSelect
-        open={isSigninModalOpen}
-        onCancel={handleCancelSigninModal}
-        onInstitution={() => navigate('/login?d=instituiton')}
-        onStudent={() => navigate('/login?d=student')}
-      />
-    </div>
+    </GenericLayout>
   );
 };
 

@@ -34,10 +34,9 @@ const Login = () => {
   };
 
   const onSubmit = async (values: FormValues) => {
-    console.log('route',getLoginRoute(domain))
     try {
       const response = await axiosInstance.post(getLoginRoute(domain), values);
-      localStorage.setItem(`nftcate-${domain}`, response.data)
+      localStorage.setItem('accessToken', response.data.token);
       navigate(`/${domain}`);
     } catch (error) {
       console.log(error)
@@ -56,7 +55,7 @@ const Login = () => {
     <AuthLayout>
       <div className="w-[90%] md:w-[60%] lg:w-3/4 xl:w-1/2 h-1/2 flex gap-4 bg-white md:shadow-xl rounded-xl">
         <div className="w-full p-3 flex flex-col items-center justify-center">
-          <h1 className="my-3 w-full text-2xl font-medium">Login</h1>
+          <h1 className="my-3 w-full text-2xl font-medium capitalize">{domain} Login</h1>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}

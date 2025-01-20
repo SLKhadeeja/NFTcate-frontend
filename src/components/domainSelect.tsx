@@ -10,6 +10,16 @@ interface Props {
 }
 
 const DomainSelect: FunctionComponent<Props> = ({ open, onCancel, onInstitution, onStudent }) => {
+  const handleSelectStudent = () => {
+    onStudent();
+    onCancel();
+  };
+
+  const handleSelectInstitution = () => {
+    onInstitution();
+    onCancel();
+  };
+
   return (
     <Modal
       title={null}
@@ -21,7 +31,7 @@ const DomainSelect: FunctionComponent<Props> = ({ open, onCancel, onInstitution,
       <div className="flex items-center justify-center p-10 gap-10">
         <div className='flex flex-col items-center gap-3'>
           <Button
-            onClick={onStudent}
+            onClick={handleSelectStudent}
             className='px-6 py-8 border-0 border-primary hover:border shadow bg-primary/20 rounded'
           >
             <UserRound />
@@ -30,7 +40,7 @@ const DomainSelect: FunctionComponent<Props> = ({ open, onCancel, onInstitution,
         </div>
         <div className='flex flex-col items-center gap-3'>
           <Button
-            onClick={onInstitution}
+            onClick={handleSelectInstitution}
             className='px-6 py-8 border-0 border-primary hover:border shadow bg-primary/20 rounded'
           >
             <University />

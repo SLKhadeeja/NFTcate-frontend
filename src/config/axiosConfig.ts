@@ -15,8 +15,7 @@ axiosInstance.interceptors.request.use(
       return Promise.reject(new Error('Invalid server URL'));
     }
 
-    const storedToken = localStorage.getItem('accessToken');
-    const token = storedToken ? JSON.parse(storedToken) : null;
+    const token = localStorage.getItem('accessToken');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }

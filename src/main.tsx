@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import { StyleProvider } from '@ant-design/cssinjs';
 import { ConfigProvider } from 'antd';
 import './index.css'
+import { LayoutProvider } from './contexts/layout.context.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -16,24 +17,26 @@ createRoot(document.getElementById('root')!).render(
         },
       }}
     >
-      <StyleProvider layer>
-        <Router>
-          <ToastContainer
-            icon={false}
-            position="top-center"
-            autoClose={2000}
-            hideProgressBar={true}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-          />
-          <App />
-        </Router>
-      </StyleProvider>
+        <StyleProvider layer>
+          <Router>
+            <ToastContainer
+              icon={false}
+              position="top-center"
+              autoClose={2000}
+              hideProgressBar={true}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
+            />
+            <LayoutProvider>
+              <App />
+            </LayoutProvider>
+          </Router>
+        </StyleProvider>
     </ConfigProvider>
   </StrictMode>,
 )
